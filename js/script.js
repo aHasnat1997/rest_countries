@@ -14,7 +14,7 @@ const loadData = datas => {
           <h2 class="card-title">${data.name.common}</h2>
           <label id="modal-btn" onclick="loadCountryDetails('${data.cca2}')" for="my-modal" class="btn btn-outline">Read More...</label>
         </div>
-        <img src="${data.flags.png}" />
+        <img class="h-full" src="${data.flags.png}" />
       </div>
     `;
     cardContainer.appendChild(div);
