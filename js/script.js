@@ -9,7 +9,7 @@ const loadData = datas => {
   for (const data of datas) {
     const div = document.createElement('div');
     div.innerHTML = `
-      <div class="card bg-base-300 shadow-xl hover:shadow-2xl overflow-hidden">
+      <div class="card h-full bg-base-300 shadow-xl hover:shadow-2xl overflow-hidden">
         <div class="card-body">
           <h2 class="card-title">${data.name.common}</h2>
           <label id="modal-btn" onclick="loadCountryDetails('${data.cca2}')" for="my-modal" class="btn btn-outline">Read More...</label>
