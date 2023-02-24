@@ -1,5 +1,3 @@
-// "use strict";
-
 const fetchData = () => {
   fetch('https://restcountries.com/v3.1/all')
     .then(res => res.json())
@@ -7,7 +5,6 @@ const fetchData = () => {
 }
 
 const loadData = datas => {
-  console.log(datas)
   const cardContainer = document.getElementById('card-container');
   for (const data of datas) {
     const div = document.createElement('div');
@@ -15,7 +12,7 @@ const loadData = datas => {
       <div class="card bg-base-300 shadow-xl hover:shadow-2xl overflow-hidden">
         <div class="card-body">
           <h2 class="card-title">${data.name.common}</h2>
-          <label id="modal-btn" for="my-modal-3" class="btn btn-outline">Read More...</label>
+          <label id="modal-btn" onclick="loadCountryDetails('${data.cca2}')" for="my-modal" class="btn btn-outline">Read More...</label>
         </div>
         <img src="${data.flags.png}" />
       </div>
@@ -23,39 +20,25 @@ const loadData = datas => {
     cardContainer.appendChild(div);
   }
 
-  document.getElementById('modal-btn').addEventListener('click', function () {
-    const modalContainer = document.getElementById('modal-container');
-  
-    const div = document.createElement('div');
-    div.innerHTML = `
-      <input type="checkbox" id="my-modal-3" class="modal-toggle" />
-      <div class="modal">
-        <div class="modal-box relative">
-          <label for="my-modal-3" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-          <h3 class="text-lg font-bold">Congratulations random Internet user!</h3>
-          <p class="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for free!</p>
-        </div>
-      </div>
-    `;
-    modalContainer.appendChild(div);
-  });
 }
 
-// document.getElementById('modal-btn').addEventListener('click', function () {
-//   const modalContainer = document.getElementById('modal-container');
+const loadCountryDetails = code => {
+  const url = `https://restcountries.com/v3.1/alpha/${code}`;
+  console.log(url);
+  fetch(url)
+    .then(res => res.json())
+    .then(data => modal(data[0]))
+}
 
-//   const div = document.createElement('div');
-//   div.innerHTML = `
-//     <input type="checkbox" id="my-modal-3" class="modal-toggle" />
-//     <div class="modal">
-//       <div class="modal-box relative">
-//         <label for="my-modal-3" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-//         <h3 class="text-lg font-bold">Congratulations random Internet user!</h3>
-//         <p class="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for free!</p>
-//       </div>
-//     </div>
-//   `;
-// });
+const modal = data => {
+  document.getElementById('flag').setAttribute('src', data.flags.png);
+  document.getElementById('common').innerText = `Name : ${data.name.common}`;
+  document.getElementById('official').innerText = `Official Name : ${data.name.official}`;
+  document.getElementById('capital').innerText = `Capital : ${data.capital[0]}`;
+  document.getElementById('region').innerText = `Region : ${data.region}`;
+  document.getElementById('subregion').innerText = `Subregion : ${data.subregion}`;
+  document.getElementById('startOfWeek').innerText = `Start Of Week : ${data.startOfWeek}`;
+  document.getElementById('timezones').innerText = `Timezones : ${data.timezones[0]}`;
+}
 
 fetchData();
-
